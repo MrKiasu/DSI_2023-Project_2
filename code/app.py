@@ -9,9 +9,6 @@ def main():
        </div>"""
     st.markdown(style, unsafe_allow_html=True)
     left, right = st.columns((2,2))
-    
-    #tranc_year = left.number_input("The year of when this prediction is for", step = 1.0, format="%d", value = 2023),
-    #floor_area_sqm = right.number_input("Target Floor Area (sqm)",  step = 1.0, format='%d', value = 100),
 
     hdb_age = left.number_input("Target HDB Age", min_value = 5, step = 1, format='%d', value = 5),
 
@@ -79,11 +76,7 @@ def main():
                                   "Yishun",
                                   "Seletar"))    
 
-    #dist_CBD = st.selectbox("Distance to CBD Area?", 
-    #                             ("Walkable (<2km)", "15mins Bus/MRT Trip (2 to 5km)", 
-    #                              "30mins Bus/MRT Trip (5 to 10km)", "1hr Bus/MRT Trip (10 to 20km)"))
-    
-    
+   
     button = st.button('Predict')
     
     # if button is pressed
@@ -98,10 +91,45 @@ with open("D:\Documents\GitHub\DSI_2023-Project_2\code\HDB_model.pkl", 'rb') as 
     model = pickle.load(rf)
 
 
-def predict(floor_area_sqm, hdb_age, mid, full_flat_type, dist_CBD):
+def predict(floor_area_sqm, hdb_age, mid, full_flat_type, dist_CBD, mall_nearest_distance, mrt_nearest_distance, postal_sector):
     # processing user input
 
-    lists = [ floor_area_sqm, hdb_age, mid, full_flat_type, dist_CBD]
+    tranc_year = 2023
+    
+    if mrt_nearest_distance == "A Stone's Throw Away(<5mins)":
+        mrt_nearest_distance = 100
+    elif mrt_nearest_distance == "Short Walk (5 to 10mins)":
+        mrt_nearest_distance = 200
+    elif mrt_nearest_distance == "Short Bus Ride (10 to 15mins)":
+        mrt_nearest_distance = 300
+    elif mrt_nearest_distance == "Long Bus Ride (>20mins)":
+        mrt_nearest_distance = 400    
+    
+    if mall_nearest_distance == "A Stone's Throw Away(<5mins)":
+        mall_nearest_distance = 100
+    elif mall_nearest_distance == "Short Walk (5 to 10mins)":
+        mall_nearest_distance = 200
+    elif mall_nearest_distance == "Short Bus Ride (10 to 15mins)":
+        mall_nearest_distance = 300
+    elif mall_nearest_distance == "Long Bus Ride (>20mins)":
+        mall_nearest_distance = 400   
+
+    if mid == "Down to Earth (1st to 4th storey)":
+        mid = 2
+    elif mid == "Middle Range (5th to 9th storey)":
+        mid = 8
+    elif mid == "High Range (10th to 15th storey)":
+        mid = 12
+    elif mid == "Skyscraper (16th storey and above)":
+        mid = 40
+
+    df_sector_CBD = pd.read_csv("../data/postal_sector_to_CBD.csv", sep = ";")
+    df_flat_sqm = pd.read_csv("../data/full_flat_type_mean_sqm.csv")
+    
+    floor_area_sqm = df_flat_sqm[df_flat_sqm["full_flat_type" == full_flat_type]]["floor_area_sqm"].astype("float")
+    dist_CBD = df_sector_CBD[df_sector_CBD["postal_sector" == postal_sector]]["dist_CBD"].astype("float")
+
+    lists = [ tranc_year, floor_area_sqm, hdb_age, mid, full_flat_type, dist_CBD]
     df = pd.DataFrame(lists).transpose()
 
     # making predictions using the train model
