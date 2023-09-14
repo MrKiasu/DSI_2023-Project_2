@@ -107,13 +107,13 @@ def predict(hdb_age,full_flat_type,mrt_nearest_distance,mall_nearest_distance,po
         mrt_nearest_distance = 1600   
     
     if mall_nearest_distance == "A Stone's Throw Away(<5mins)":
-        mall_nearest_distance = 100
+        mall_nearest_distance = 400
     elif mall_nearest_distance == "Short Walk (5 to 10mins)":
-        mall_nearest_distance = 200
-    elif mall_nearest_distance == "Short Bus Ride (10 to 15mins)"
-        mall_nearest_distance = 300
+        mall_nearest_distance = 800
+    elif mall_nearest_distance == "Short Bus Ride (10 to 15mins)":
+        mall_nearest_distance = 1200
     elif mall_nearest_distance == "Long Bus Ride (>20mins)":
-        mall_nearest_distance = 400   
+        mall_nearest_distance = 1600   
 
     if mid == "Down to Earth (1st to 4th storey)":
         mid = 2
@@ -124,15 +124,20 @@ def predict(hdb_age,full_flat_type,mrt_nearest_distance,mall_nearest_distance,po
     elif mid == "Skyscraper (16th storey and above)":
         mid = 40
 
-    df_sector_CBD = pd.read_csv("../data/postal_sector_to_CBD.csv", sep = ";")
+    df_sector_CBD = pd.read_csv("../data/postal_sector_mean_dist_CBD.csv")
     df_flat_sqm = pd.read_csv("../data/full_flat_type_mean_sqm.csv")
+    df_sector_user = pd.read_csv("../data/postal_sector_user_selection.csv", sep = ";")
+    df = pd.read_csv("../data/feature_names.csv")
+
+    floor_area_sqm = df_flat_sqm.loc[df_flat_sqm["full_flat_type"] == full_flat_type]["mean_floor_area_sqm"]
+    postal_sector = df_sector_user[df_sector_user["postal_sector_user"] == postal_sector]["postal_sector"].values[0]
+    dist_CBD = df_sector_CBD[df_sector_CBD["postal_sector"] == postal_sector]["mean_dist_CBD"].values[0]
+
+
+
+    #df = pd.DataFrame(lists).transpose()
     
-    floor_area_sqm = df_flat_sqm[df_flat_sqm["full_flat_type" == full_flat_type]]["mean_floor_area_sqm"].astype("float")
-    dist_CBD = df_sector_CBD[df_sector_CBD["postal_sector" == postal_sector]]["dist_CBD"].astype("float")
-
-    lists = [tranc_year,floor_area_sqm,hdb_age,full_flat_type,mrt_nearest_distance,mall_nearest_distance,postal_sector,dist_CBD,mid]
-    df = pd.DataFrame(lists).transpose()
-
+    df.to_csv("output.csv")
     # making predictions using the train model
     prediction = model.predict(df)
     result = int(prediction)

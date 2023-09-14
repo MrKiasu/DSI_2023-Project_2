@@ -1,4 +1,4 @@
-﻿Postal Sector;dist_CBD
+﻿postal_sector_user;postal_sector
 Raffles Place;5
 Tanjong Pagar;8
 Queenstown;14
@@ -9,7 +9,7 @@ Little India;21
 Bukit Timah;27
 Novena;30
 Toa Payoh;31
-"Macpherson""";37
+Macpherson;37
 Geylang;40
 Katong;44
 Bedok;46
