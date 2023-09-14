@@ -9,6 +9,7 @@ As many aspiring homeowners will be financing their homes using their CPF saving
 So, how can the CPF Board assist these potential homeowners?
 
 This project explores the key features that affect HDB resale prices in Singapore using data science methodologies. The objective is to build and deploy a reliable HDB resale price calculator that is intuitive and easy for potential homeowners to use, to help them understand what could be the resale price of their desired flat based on the key features. 
+
 ---
 
 ### Data Used
@@ -72,12 +73,11 @@ Source: Kaggle (https://www.kaggle.com/competitions/dsi-sg-project-2-regression-
 
 ### Notebook description
 
-01_Cleaning_final.ipynb 
-
 * [`01_Cleaning_final`](../code/'01_Cleaning_final.ipynb'): Problem statement, data cleaning of train dataset, and feature engineering
 * [`02_EDA_final`](../code/'02_EDA_final.ipynb'): Exploratory data analysis of features and feature selection
-* [`03_Modelling and Prediction_final`](../code/'03_Modelling and Prediction_final.ipynb'): Data modelling, conclusions and recommendations
-* [`04_Kaggle_final`](../code/'04_Kaggle_final.ipynb'): Data cleaning of test dataset, prediction using fitted model, Kaggle score
+* [`03_Modelling_final`](../code/'03_Modelling_final.ipynb'): Data modelling, conclusions and recommendations
+* [`04_Kaggle_submission_final`](../code/'04_Kaggle_submission_final.ipynb'): Data cleaning of test dataset, prediction using fitted model, Kaggle score
+
 ---
 
 ### Conclusion
