@@ -88,7 +88,7 @@ def main():
 
 
 # load the train model
-with open("HDB_model.pkl_final", 'rb') as rf:
+with open("HDB_model_final.pkl", 'rb') as rf:
     model = pickle.load(rf)
 
 
