@@ -5,33 +5,34 @@ import pandas as pd
 
 def main():
     style = """<div style='background-color:white; padding:12px'>
-              <h1 style='color:black'>House Price Prediction App Hello World</h1>
+              <h1 style='color:black'>What is the estimated resale price?</h1>
        </div>"""
+    
     st.markdown(style, unsafe_allow_html=True)
     left, right = st.columns((2,2))
 
     hdb_age = left.number_input("Target HDB Age", min_value = 5, step = 1, format='%d', value = 5),
 
     full_flat_type = st.selectbox("What flat type-model ?",
-                                  ("1 ROOM - Improved", "2 ROOM - DBSS", "2 ROOM - Improved", "2 ROOM - Model A", 
-                                   "2 ROOM - Premium Apartment", "2 ROOM - Standard",
-                                  "3 ROOM - DBSS", "3 ROOM - Improved","3 ROOM - Model A", "3 ROOM - New Generation",
-                                  "3 ROOM - Premium Apartment", "3 ROOM - Simplified",
-                                  "3 ROOM - Standard", "3 ROOM - Terrace",
-                                  "4 ROOM - Adjoined flat", "4 ROOM - DBSS",
-                                  "4 ROOM - Improved", "4 ROOM - Model A",
-                                  "4 ROOM - Model A2", "4 ROOM - New Generation",
-                                  "4 ROOM - Premium Apartment", "4 ROOM - Premium Apartment Loft",
-                                  "4 ROOM - Simplified","4 ROOM - Standard","4 ROOM - Terrace",
-                                  "4 ROOM - Type S1","5 ROOM - Adjoined flat","5 ROOM - DBSS",
-                                  "5 ROOM - Improved","5 ROOM - Improved-Maisonette",
-                                  "5 ROOM - Model A","5 ROOM - Model A-Maisonette",
-                                  "5 ROOM - Premium Apartment","5 ROOM - Premium Apartment Loft",
-                                  "5 ROOM - Standard", "5 ROOM - Type S2", "EXECUTIVE - Adjoined flat",
-                                  "EXECUTIVE - Apartment","EXECUTIVE - Maisonette",
-                                  "EXECUTIVE - Premium Apartment",
-                                  "EXECUTIVE - Premium Maisonette",
-                                  "MULTI-GENERATION - Multi Generation"))
+                                  ("1 ROOM Improved", "2 ROOM DBSS", "2 ROOM Improved", "2 ROOM Model A", 
+                                   "2 ROOM Premium Apartment", "2 ROOM Standard",
+                                  "3 ROOM DBSS", "3 ROOM - Improved","3 ROOM Model A", "3 ROOM New Generation",
+                                  "3 ROOM Premium Apartment", "3 ROOM Simplified",
+                                  "3 ROOM Standard", "3 ROOM Terrace",
+                                  "4 ROOM Adjoined flat", "4 ROOM DBSS",
+                                  "4 ROOM Improved", "4 ROOM Model A",
+                                  "4 ROOM Model A2", "4 ROOM New Generation",
+                                  "4 ROOM Premium Apartment", "4 ROOM Premium Apartment Loft",
+                                  "4 ROOM Simplified","4 ROOM Standard","4 ROOM Terrace",
+                                  "4 ROOM Type S1","5 ROOM Adjoined flat","5 ROOM DBSS",
+                                  "5 ROOM Improved","5 ROOM Improved-Maisonette",
+                                  "5 ROOM Model A","5 ROOM Model A-Maisonette",
+                                  "5 ROOM Premium Apartment","5 ROOM Premium Apartment Loft",
+                                  "5 ROOM Standard", "5 ROOM Type S2", "EXECUTIVE Adjoined flat",
+                                  "EXECUTIVE Apartment","EXECUTIVE - Maisonette",
+                                  "EXECUTIVE Premium Apartment",
+                                  "EXECUTIVE Premium Maisonette",
+                                  "MULTI-GENERATION Multi Generation"))
     
 
     mrt_nearest_distance = st.selectbox("Distance to MRT?", 
@@ -82,8 +83,8 @@ def main():
     # if button is pressed
     if button:
         # make prediction
-        result = predict(hdb_age, mid, full_flat_type, postal_sector, mrt_nearest_distance, mall_nearest_distance)
-        st.success(f'The predicted HDB resale price is ${result}')
+        result = predict(hdb_age,full_flat_type,mrt_nearest_distance,mall_nearest_distance,postal_sector,mid)
+        st.success(f'The predicted HDB resale price is ${result} ± 50,000')
 
 
 # load the train model
@@ -91,25 +92,25 @@ with open("D:\Documents\GitHub\DSI_2023-Project_2\code\HDB_model.pkl", 'rb') as 
     model = pickle.load(rf)
 
 
-def predict(floor_area_sqm, hdb_age, mid, full_flat_type, dist_CBD, mall_nearest_distance, mrt_nearest_distance, postal_sector):
+def predict(hdb_age,full_flat_type,mrt_nearest_distance,mall_nearest_distance,postal_sector,mid):
     # processing user input
 
     tranc_year = 2023
     
     if mrt_nearest_distance == "A Stone's Throw Away(<5mins)":
-        mrt_nearest_distance = 100
+        mrt_nearest_distance = 400
     elif mrt_nearest_distance == "Short Walk (5 to 10mins)":
-        mrt_nearest_distance = 200
+        mrt_nearest_distance = 800
     elif mrt_nearest_distance == "Short Bus Ride (10 to 15mins)":
-        mrt_nearest_distance = 300
+        mrt_nearest_distance = 1200
     elif mrt_nearest_distance == "Long Bus Ride (>20mins)":
-        mrt_nearest_distance = 400    
+        mrt_nearest_distance = 1600   
     
     if mall_nearest_distance == "A Stone's Throw Away(<5mins)":
         mall_nearest_distance = 100
     elif mall_nearest_distance == "Short Walk (5 to 10mins)":
         mall_nearest_distance = 200
-    elif mall_nearest_distance == "Short Bus Ride (10 to 15mins)":
+    elif mall_nearest_distance == "Short Bus Ride (10 to 15mins)"
         mall_nearest_distance = 300
     elif mall_nearest_distance == "Long Bus Ride (>20mins)":
         mall_nearest_distance = 400   
@@ -126,10 +127,10 @@ def predict(floor_area_sqm, hdb_age, mid, full_flat_type, dist_CBD, mall_nearest
     df_sector_CBD = pd.read_csv("../data/postal_sector_to_CBD.csv", sep = ";")
     df_flat_sqm = pd.read_csv("../data/full_flat_type_mean_sqm.csv")
     
-    floor_area_sqm = df_flat_sqm[df_flat_sqm["full_flat_type" == full_flat_type]]["floor_area_sqm"].astype("float")
+    floor_area_sqm = df_flat_sqm[df_flat_sqm["full_flat_type" == full_flat_type]]["mean_floor_area_sqm"].astype("float")
     dist_CBD = df_sector_CBD[df_sector_CBD["postal_sector" == postal_sector]]["dist_CBD"].astype("float")
 
-    lists = [ tranc_year, floor_area_sqm, hdb_age, mid, full_flat_type, dist_CBD]
+    lists = [tranc_year,floor_area_sqm,hdb_age,full_flat_type,mrt_nearest_distance,mall_nearest_distance,postal_sector,dist_CBD,mid]
     df = pd.DataFrame(lists).transpose()
 
     # making predictions using the train model
