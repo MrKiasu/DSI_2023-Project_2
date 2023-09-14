@@ -15,8 +15,8 @@ This project explores the key features that affect HDB resale prices in Singapor
 ### Data Used
 
 Source: Kaggle (https://www.kaggle.com/competitions/dsi-sg-project-2-regression-challenge-hdb-price/data)
-* [`train.csv`](/datasets/'train.csv'): Training data containing HDB resale price and 76 features
-* [`test.csv`](/datasets/'test.csv'): Test data containing 76 features
+* [`train.csv`](/datasets/train.csv): Training data containing HDB resale price and 76 features
+* [`test.csv`](/datasets/test.csv): Test data containing 76 features
 
 ---
 
@@ -73,10 +73,10 @@ Source: Kaggle (https://www.kaggle.com/competitions/dsi-sg-project-2-regression-
 
 ### Notebook description
 
-* [`01_Cleaning_final`](/code/'01_Cleaning_final.ipynb'): Problem statement, data cleaning of train dataset, and feature engineering
-* [`02_EDA_final`](/code/'02_EDA_final.ipynb'): Exploratory data analysis of features and feature selection
-* [`03_Modelling_final`](/code/'03_Modelling_final.ipynb'): Data modelling, conclusions and recommendations
-* [`04_Kaggle_submission_final`](/code/'04_Kaggle_submission_final.ipynb'): Data cleaning of test dataset, prediction using fitted model, Kaggle score
+* [`01_Cleaning_final`](/code/01_Cleaning_final.ipynb): Problem statement, data cleaning of train dataset, and feature engineering
+* [`02_EDA_final`](/code/02_EDA_final.ipynb): Exploratory data analysis of features and feature selection
+* [`03_Modelling_final`](/code/03_Modelling_final.ipynb): Data modelling, conclusions and recommendations
+* [`04_Kaggle_submission_final`](/code/04_Kaggle_submission_final.ipynb): Data cleaning of test dataset, prediction using fitted model, Kaggle score
 
 ---
 
