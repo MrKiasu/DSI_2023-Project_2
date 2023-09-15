@@ -66,7 +66,7 @@ Source: Kaggle (https://www.kaggle.com/competitions/dsi-sg-project-2-regression-
 |**pri_sch_name**|*string*|name of the nearest primary school|
 |**pri_sch_latitude**|*float*|latitude (in decimal degrees) of the the nearest primary school|
 |**pri_sch_longitude**|*float*|longitude (in decimal degrees) of the nearest primary school|
-|**postal_sector**|*int64*|first two digits of postal code|
+|**postal_sector**|*integer*|first two digits of postal code|
 |**dist_CBD**|*float*|distance (in metres) to Raffles Place MRT|
 
 ---
